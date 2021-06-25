@@ -20,7 +20,10 @@ jobs:
     - name: cherry pick commits to release branches
       run: |
         BASE=${{ github.event.base_ref }}
+        BEFORE=${{ github.event.before }}
         BRANCH=v1.5.20
+        echo $BASE
+        echo $BEFORE
         echo git checkout -b $BRANCH origin/$BRANCH
-        echo git rebase --onto $BRANCH $BASE origin/main
+        echo git rebase --onto $BRANCH $BEFORE origin/main
         echo git push origin $BRANCH
