@@ -1,0 +1,26 @@
+# Workflow to run tests
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: cherry pick commits to release branches
+      run: |
+        BASE=${{ github.event.base_ref }}
+        BRANCH=v1.5.20
+        echo git checkout -b $BRANCH origin/$BRANCH
+        echo git rebase --onto $BRANCH $BASE origin/main
+        echo git push origin $BRANCH
