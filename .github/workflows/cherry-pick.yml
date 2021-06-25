@@ -17,12 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: cherry pick commits to release branches
+    - name: merge commits from main to release branch
       run: |
-        BEFORE=${{ github.event.before }}
+        # merging main to release branch
         BRANCH=v1.5.20
-        echo $BASE
-        echo $BEFORE
         git checkout -b $BRANCH origin/$BRANCH
-        git rebase --onto $BRANCH $BEFORE origin/main
+        git pull origin main
+        echo running tests
         git push origin $BRANCH
