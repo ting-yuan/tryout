@@ -23,6 +23,10 @@ jobs:
     - name: merge commits from main to release branch
       run: |
         # merging main to release branch
+        echo "gradle.properties merge=ours" > .git/info/attributes
+        git config --global user.email "do-not-reply@google.com"
+        git config --global user.name "KSP Auto Merger"
+        git config --global merge.ours.driver true
         # git pull origin main
         git merge origin/main
         echo running tests
